@@ -1,10 +1,14 @@
 function sumOfTheLastKElements(arrayLength, sumCount) {
-    let array = [1];
-    for (let i=1; i<arrayLength; i++) {
-        array[i]=array[i-1]+array[i-2]+array[i-3];
+    const array = [1];
+    for (let i = 1; i < arrayLength; i++) {
+        array[i] = 0;
+        for (let j = 1; j <= sumCount; j++) {
+            array[i] += (array[i - j] != undefined ? array[i - j] : 0);
+        }
     }
-
-    console.log(array);
+    
+    return array;
 }
 
-sumOfTheLastKElements(6,3);
+console.log(sumOfTheLastKElements(6, 3));
+sumOfTheLastKElements(8, 2);
