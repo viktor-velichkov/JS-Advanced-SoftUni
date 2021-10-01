@@ -13,12 +13,12 @@ function orbit(input) {
         }
     }
 
-    let maxStep = Math.max(height - x, width - y);
+    let maxStep = Math.max(Math.abs(x - height+1 ), Math.abs(y - width +1 ), x, y);
     let step = 0;
     let value = maxStep + 1;
     while (value > 0) {
-        for (let row = x - maxStep + step; row < x + maxStep - step; row++) {
-            for (col = y - maxStep + step; col < y + maxStep - step; col++) {
+        for (let row = x - maxStep + step; row <= x + maxStep - step; row++) {
+            for (col = y - maxStep + step; col <= y + maxStep - step; col++) {
                 matrix[row] !== undefined ? (matrix[row][col] !== undefined ? matrix[row][col] = value : undefined) : undefined;
             }
         }
@@ -26,8 +26,7 @@ function orbit(input) {
         step++;
     }
 
-    matrix.forEach(el => console.log(el.join()));
-    console.log(matrix[-1]);
+    matrix.forEach(el => console.log(el.join(' ')));
 }
 
-orbit([4, 4, 2, 3]);
+orbit([5, 5, 4, 4]);
