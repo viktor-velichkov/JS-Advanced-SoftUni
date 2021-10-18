@@ -11,36 +11,33 @@ function solve(commands) {
 
     function creator() {
 
-        const objects = [];
+        const objects = {};
 
         return {
             create,
-            inherit,
             set,
             print
         }
 
         function create(name, additionalCommand, name2) {
-            objects.push({ name });
-
-            additionalCommand != undefined ? inherit.call(objects[name], name2) : undefined;
-        }
-
-        function inherit(name) {
-            Object.assign(this, objects[name]);
+            objects[name] = additionalCommand ? Object.create(objects[name2]) : {};
         }
 
         function set(name, key, value) {
-            const currentObject = objects.find(obj=>obj.name==name);
-            currentObject[key] = value;
+            objects[name][key] = value;
         }
 
         function print(name) {
-            const currentObject = objects.find(obj=>obj.name==name);
-            const props = Object.keys(currentObject);
-            const results = props.map((key => `${key}:${props[key]}`));
-            console.log(props.join());
+
+            const result = [];
+            for (let key in objects[name]) {
+                result.push(`${key}:${objects[name][key]}`)
+            }
+
+            console.log(result.join(','));
         }
+
+
     }
 
 }
@@ -51,7 +48,5 @@ solve(['create c1',
     'set c1 color red',
     'set c2 model new',
     'print c1',
-    'print c2']);
-
-
-
+    'print c2'
+]);
